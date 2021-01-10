@@ -1,0 +1,5 @@
+.aliments-picture {
+  height: 120px;
+  width:150px;
+  object-fit: cover;
+}
