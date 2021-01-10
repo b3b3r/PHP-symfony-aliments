@@ -1,7 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Aliments{% endblock %}
-{% block myTitle %}Liste aliments{% endblock %}
+{% block myTitle %}
+    Liste des aliments
+    {% if app.request.get("calory") %}
+        avec moins de {{app.request.get("calory")}} calories
+    {% endif %}
+{% endblock %}
 
 {% block body %}
     <a href="{{path('alimentsByCalory', {'calory':50})}}">Aliments avec moins de 50 calories au 100 gr </a>
