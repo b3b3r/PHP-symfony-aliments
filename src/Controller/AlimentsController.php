@@ -14,18 +14,15 @@ class AlimentsController extends AbstractController
      */
     public function index(AlimentRepository $alimentRepository): Response
     {
+        $aliments = $alimentRepository->findAll();
+        if (isset($_GET['calory'])) {
+            $aliments = $alimentRepository->getAlimentBy("calories", "<=", $_GET['calory']);
+        };
+        if (isset($_GET['glucide'])) {
+            $aliments = $alimentRepository->getAlimentBy("glucides", "<=", floatval($_GET['glucide']));
+        };
         return $this->render('aliments/index.html.twig', [
-            'aliments' => $alimentRepository->findAll()
-        ]);
-    }
-
-    /**
-     * @Route("/aliments/{calory}", name="alimentsByCalory")
-     */
-    public function alimentWIthLessCatelory(AlimentRepository $alimentRepository, int $calory): Response
-    {
-        return $this->render('aliments/index.html.twig', [
-            'aliments' => $alimentRepository->getAlimentByCalory($calory)
+            'aliments' => $aliments
         ]);
     }
 }
