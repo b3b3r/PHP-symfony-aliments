@@ -1,13 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Admin - aliments{% endblock %}
-{% block myTitle %}Modifier {{aliment.name}}{% endblock %}
+{% block myTitle %}
+  {% if aliment.id %}
+    Modifier {{aliment.name}}
+  {% else %}
+    Ajouter
+  {% endif %}
+{% endblock %}
 
 {% block body %}
     {{form_start(form)}}
     <div class="row">
       <div class="col-6">
-        <img src="{{asset('images/' ~ aliment.picture)}}" style="width:25%"/>
+        {% if aliment.picture is not null %}
+          <img src="{{asset('images/' ~ aliment.picture)}}" style="width:25%"/>
+        {% endif %}
         <div>{{form_row(form.picture)}}</div>
         <div>{{form_row(form.name, {"attr" : { "class" : "text-danger"}, "label":"Nom de l'aliment"})}}</div>
       </div>
