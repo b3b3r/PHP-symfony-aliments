@@ -11,9 +11,9 @@
 {% endblock %}
 
 {% block body %}
-    <a href="{{path('aliments-list')}}" class="btn btn-primary">Tous</a>
-    <a href="{{path('aliments-list', {'calory':50})}}" class="btn btn-primary">Aliments avec moins de 50 calories au 100 gr </a>
-    <a href="{{path('aliments-list', {'glucide':1})}}" class="btn btn-primary">Aliments avec moins de 1 glucides au 100 gr </a>
+    <a href="{{path('aliments_list')}}" class="btn btn-primary">Tous</a>
+    <a href="{{path('aliments_list', {'calory':50})}}" class="btn btn-primary">Aliments avec moins de 50 calories au 100 gr </a>
+    <a href="{{path('aliments_list', {'glucide':1})}}" class="btn btn-primary">Aliments avec moins de 1 glucides au 100 gr </a>
     <div class="row">
         {% for aliment in aliments %}
             <div clas="col-12 col-md-6 col-lg-4 col-xl-3">

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin - aliments{% endblock %}
+{% block myTitle %}Aliments{% endblock %}
+
+{% block body %}
+    <a href="{{path("admin_aliments_new")}}" class="btn btn-success">Ajouter <a/>
+    <table class="table">
+        <tr class="table-primary">
+            <td>Image</td>
+            <td>Aliment</td>
+            <td>Prix</td>
+            <td>Calories</td>
+            <td>Protéines</td>
+            <td>Glucides</td>
+            <td>Lipides</td>
+            <td>Actions</td>
+        </tr>
+        {% for aliment in aliments %}
+            <tr>
+                <td><img src="{{asset('images/' ~ aliment.picture)}}" class="aliments-picture"/></td>
+                <td><strong>{{aliment.name}}</strong></td>
+                <td>{{aliment.price}}</td>
+                <td>{{aliment.calories}}</td>
+                <td>{{aliment.proteines}}</td>
+                <td>{{aliment.glucides}}</td>
+                <td>{{aliment.lipides}}</td>
+                <td>
+                    <a class="btn btn-secondary" href="{{path("admin_aliments_edit", {'id' : aliment.id})}}">Modifier</a>
+                    <a class="btn btn-danger" href="">Supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
