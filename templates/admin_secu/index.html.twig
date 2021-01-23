@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+{% block myTitle %}page d'inscription{% endblock %}
+
+{% block body %}
+        {{form_start(form)}}
+            {{form_row(form.username, {
+                "attr": {
+                    "placeholder": "jean-Claude",
+                },
+                "label": "Login"
+            })}}
+            {{form_widget(form)}}
+        {{form_end(form)}}
+{% endblock %}
