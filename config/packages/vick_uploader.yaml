@@ -4,3 +4,4 @@ vich_uploader:
       aliments:
         uri_prefix: /images/aliments
         upload_destination: '%kernel.project_dir%/public/images/aliments'
+        namer: Vich\UploaderBundle\Naming\SmartUniqueNamer # permet d avoir des identifiants uniques sur les fichiers téléchargés

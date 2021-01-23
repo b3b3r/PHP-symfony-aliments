@@ -25,7 +25,7 @@
         </tr>
         {% for aliment in aliments %}
             <tr>
-                <td><img src="{{asset('images/' ~ aliment.picture)}}" class="aliments-picture"/></td>
+                <td><img src="{{asset('images/aliments/' ~ aliment.picture)}}" class="aliments-picture"/></td>
                 <td><strong>{{aliment.name}}</strong></td>
                 <td>{{aliment.price}}</td>
                 <td>{{aliment.calories}}</td>

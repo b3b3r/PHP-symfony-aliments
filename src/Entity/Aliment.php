@@ -2,11 +2,17 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AlimentRepository;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass=AlimentRepository::class)
+ * @Vich\Uploadable
  */
 class Aliment
 {
@@ -35,6 +41,11 @@ class Aliment
     private $picture;
 
     /**
+     * @Vich\UploadableField(mapping="aliments", fileNameProperty="picture")
+     */
+    private $pictureFile;
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $calories;
@@ -53,6 +64,16 @@ class Aliment
      * @ORM\Column(type="float")
      */
     private $lipides;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updated_at;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Type::class, inversedBy="aliments")
+     */
+    private $type;
 
     public function getId(): ?int
     {
@@ -88,7 +109,7 @@ class Aliment
         return $this->picture;
     }
 
-    public function setPicture(string $picture): self
+    public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
 
@@ -139,6 +160,46 @@ class Aliment
     public function setLipides(float $lipides): self
     {
         $this->lipides = $lipides;
+
+        return $this;
+    }
+
+    public function setpictureFile(?File $pictureFile = null): self
+    {
+        $this->pictureFile = $pictureFile;
+
+        if ($this->pictureFile instanceof UploadedFile) {
+            $this->updated_at = new DateTime('now');
+        }
+
+        return $this;
+    }
+
+    public function getpictureFile(): ?File
+    {
+        return $this->pictureFile;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getType(): ?Type
+    {
+        return $this->type;
+    }
+
+    public function setType(?Type $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
