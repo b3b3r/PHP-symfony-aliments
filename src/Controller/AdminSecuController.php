@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AdminSecuController extends AbstractController
 {
@@ -24,6 +25,7 @@ class AdminSecuController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $securePassword = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword(($securePassword));
+            $user->setRole("ROLE_USER");
             $manager->persist($user);
             $manager->flush();
             return $this->redirectToRoute("aliments_list");
@@ -36,9 +38,12 @@ class AdminSecuController extends AbstractController
     /**
      * @Route("/connection", name="connection")
     */
-    public function connect(): Response
+    public function connect(AuthenticationUtils $utils): Response
     {
-        return $this->render('admin_secu/login.html.twig');
+        return $this->render('admin_secu/login.html.twig',[
+            'lastUserName' => $utils->getLastUsername(),
+            'error' => $utils->getLastAuthenticationError()
+        ]);
     }
 
     /**
