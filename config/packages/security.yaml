@@ -5,6 +5,10 @@ security:
             algorithm: auto
     providers:
         users_in_memory: { memory: null }
+        in_database:
+            entity:
+                class: App\Entity\User
+                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -12,8 +16,13 @@ security:
         main:
             anonymous: true
             lazy: true
-            provider: users_in_memory
-
+            provider: in_database
+            form_login:
+                login_path: connection
+                check_path: connection
+            logout:
+                path: deconnection
+                target: aliments_list
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
