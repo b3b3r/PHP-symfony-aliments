@@ -6,6 +6,7 @@ use App\Entity\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class TypeType extends AbstractType
@@ -14,7 +15,7 @@ class TypeType extends AbstractType
     {
         $builder
             ->add('label')
-            ->add('picture')
+            ->add('pictureFile', FileType::class, ['required'=> false])
             ->add('saveMessage', SubmitType::class, [
                 'label' => 'Envoyer'])
         ;

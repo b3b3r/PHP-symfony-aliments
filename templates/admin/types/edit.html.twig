@@ -16,7 +16,7 @@
         {% if type.picture is not null %}
           <img src="{{asset('images/types/' ~ type.picture)}}" style="width:25%"/>
         {% endif %}
-        <div>{{form_row(form.picture)}}</div>
+        <div>{{form_row(form.pictureFile)}}</div>
         <div>{{form_row(form.label, {"attr" : { "class" : "text-danger"}, "label":"Nom du type"})}}</div>
       </div>
       <div class="col-6">

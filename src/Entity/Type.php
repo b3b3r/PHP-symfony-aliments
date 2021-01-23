@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\TypeRepository;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=TypeRepository::class)
+ * @Vich\Uploadable
  */
 class Type
 {
@@ -30,9 +34,19 @@ class Type
     private $picture;
 
     /**
+     * @Vich\UploadableField(mapping="types", fileNameProperty="picture")
+     */
+    private $pictureFile;
+
+    /**
      * @ORM\OneToMany(targetEntity=Aliment::class, mappedBy="type")
      */
     private $aliments;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updated_at;
 
     public function __construct()
     {
@@ -61,7 +75,7 @@ class Type
         return $this->picture;
     }
 
-    public function setPicture(string $picture): self
+    public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
 
@@ -94,6 +108,34 @@ class Type
                 $aliment->setType(null);
             }
         }
+
+        return $this;
+    }
+
+    public function setpictureFile(?File $pictureFile = null): self
+    {
+        $this->pictureFile = $pictureFile;
+
+        if ($this->pictureFile instanceof UploadedFile) {
+            $this->updated_at = new \DateTime('now');
+        }
+
+        return $this;
+    }
+
+    public function getpictureFile(): ?File
+    {
+        return $this->pictureFile;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
 
         return $this;
     }
