@@ -6,12 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"username"}, message="Le pseudo existe déjà")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -77,5 +78,20 @@ class User
         $this->checkPassword = $checkPassword;
 
         return $this;
+    }
+    
+    public function getRoles()
+    {
+        return ["ROLE_USER"];
+    }
+
+    public function getSalt()
+    {
+        
+    }
+
+    public function eraseCredentials()
+    {
+        
     }
 }

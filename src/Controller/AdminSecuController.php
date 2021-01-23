@@ -9,18 +9,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AdminSecuController extends AbstractController
 {
     /**
      * @Route("/inscription", name="inscription")
     */
-    public function index(Request $request, EntityManagerInterface $manager): Response
+    public function index(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder): Response
     {
         $user = new User();
         $form = $this->createForm(InscriptionType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $securePassword = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword(($securePassword));
             $manager->persist($user);
             $manager->flush();
             return $this->redirectToRoute("aliments_list");
