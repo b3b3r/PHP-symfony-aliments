@@ -36,8 +36,12 @@ class AlimentsController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
+            $message = $aliment->getId() !== null 
+            ? "La modification a bien été réalisée"
+            : "L'ajout a bien été réalisé";
             $manager->persist($aliment);
             $manager->flush();
+            $this->addFlash("success", $message);
             return $this->redirectToRoute("admin_aliments");
         }
         
@@ -55,6 +59,7 @@ class AlimentsController extends AbstractController
         if ($this->isCsrfTokenValid("SUP" .$aliment->getId(), $request->get('_token'))) {
             $manager->remove($aliment);
             $manager->flush();
+            $this->addFlash("success", "L'opération a bien été réalisée");
             return $this->redirectToRoute("admin_aliments");
         }
     }
